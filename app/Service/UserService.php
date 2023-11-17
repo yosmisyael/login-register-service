@@ -6,6 +6,7 @@ use Exception;
 use Yosev\Login\Management\Config\Database;
 use Yosev\Login\Management\Domain\User;
 use Yosev\Login\Management\Exception\ValidationException;
+use Yosev\Login\Management\Helper\Logger;
 use Yosev\Login\Management\Model\UserLoginRequest;
 use Yosev\Login\Management\Model\UserLoginResponse;
 use Yosev\Login\Management\Model\UserPasswordUpdateRequest;
@@ -49,6 +50,9 @@ class UserService
             $response->user = $user;
     
             Database::commitTransaction();
+            
+            Logger::getLogger(__CLASS__)->info("new user has been created", ["userId" => $user->id]);
+            
             return $response;
 
         } catch (Exception $exception) {
@@ -77,6 +81,9 @@ class UserService
         if (password_verify($request->password, $user->password)) {
             $response = new UserLoginResponse();
             $response->user = $user;
+
+            Logger::getLogger(__CLASS__)->info("new user login activity", ["userId" => $user->id]);
+
             return $response;
         } else {
             throw new ValidationException("Id or password is wrong"); 
@@ -111,6 +118,8 @@ class UserService
 
             $response = new UserProfileUpdateResponse();
             $response->user = $user;
+            
+            Logger::getLogger(__CLASS__)->info("new user update activity", ["userId" => $user->id]);
 
             return $response;
         } catch (Exception $exception) {
