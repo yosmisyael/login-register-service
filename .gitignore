@@ -1,2 +1,4 @@
-/vendor
-/app/*.log
+vendor
+app/*.log
+.env
+.idea
