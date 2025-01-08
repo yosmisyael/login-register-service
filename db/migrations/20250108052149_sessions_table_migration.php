@@ -27,9 +27,9 @@ final class SessionsTableMigration extends AbstractMigration
         $table->addColumn('id', 'string', [
             'null' => false,
         ])
-            ->addColumn('user_id', 'integer', [
-            'null' => false,
-            'signed' => false,
+            ->addColumn('user_id', 'string', [
+                'null' => false,
+                'limit' => 36,
             ])
             ->addForeignKey('user_id', 'users', 'id', [
                 'constraint' => 'fk_users.id_sessions_user_id',

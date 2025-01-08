@@ -19,12 +19,19 @@ final class UsersTableMigration extends AbstractMigration
      */
     public function change(): void
     {
-        $table = $this->table('users');
+        $table = $this->table('users', [
+            'id' => false,
+            'primary_key' => ['id'],
+        ]);
 
-        $table->addColumn('name', 'string', [
+        $table->addColumn('id', 'string', [
+            'null' => false,
+            'limit' => 36,
+        ])
+            ->addColumn('name', 'string', [
             'limit' => 255,
             'null' => false
-        ])
+            ])
             ->addColumn('password', 'string', [
                 'limit' => 255,
                 'null' => false
